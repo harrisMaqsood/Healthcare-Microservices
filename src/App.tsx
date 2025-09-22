@@ -6,9 +6,7 @@ function App() {
 
   const challenges = [
     { id: 1, title: "Secure Multi-Agent Architecture", icon: Shield },
-    { id: 2, title: "Advanced LangChain Workflow", icon: Brain },
-    { id: 3, title: "Startup Scaling Strategy", icon: Users },
-    { id: 4, title: "FastAPI Implementation", icon: Server }
+    { id: 4, title: "FastAPI Implementation", icon: Server, color: "indigo" }
   ];
 
   return (
@@ -27,7 +25,7 @@ function App() {
 
       <div className="max-w-7xl mx-auto px-6 py-8">
         {/* Challenge Navigation */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           {challenges.map((challenge) => {
             const Icon = challenge.icon;
             return (
@@ -58,8 +56,6 @@ function App() {
         {/* Challenge Content */}
         <div className="bg-white rounded-xl shadow-lg p-8">
           {selectedChallenge === 1 && <Challenge1 />}
-          {selectedChallenge === 2 && <Challenge2 />}
-          {selectedChallenge === 3 && <Challenge3 />}
           {selectedChallenge === 4 && <Challenge4 />}
         </div>
       </div>
@@ -165,288 +161,253 @@ function Challenge1() {
   );
 }
 
-function Challenge2() {
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center space-x-3 mb-6">
-        <Brain className="w-8 h-8 text-purple-600" />
-        <h2 className="text-3xl font-bold text-gray-900">Advanced LangChain/LangGraph Workflow</h2>
+          <p className="text-gray-600 mt-2">Production-ready healthcare AI microservice</p>
+        </div>
       </div>
 
-      {/* Agent Workflow */}
-      <div className="bg-purple-50 p-6 rounded-lg">
-        <h3 className="text-xl font-semibold mb-4">Multi-Agent Health Coaching System</h3>
-        <div className="space-y-4">
-          <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
-            <h4 className="font-semibold text-gray-900 mb-2">Agent Orchestration Flow</h4>
-            <div className="font-mono text-sm bg-gray-100 p-4 rounded">
-              <pre>{`class HealthCoachingOrchestrator:
-    def __init__(self):
-        self.agents = {
-            'router': RouterAgent(),
-            'nutrition': NutritionAgent(), 
-            'fitness': FitnessAgent(),
-            'mental_health': MentalHealthAgent(),
-            'supervisor': SupervisorAgent()
-        }
-        self.memory = ConversationBufferWindowMemory(k=10)
-        self.vector_store = PineconeVectorStore()
-
-    async def process_query(self, query: str, user_context: dict):
-        # 1. Intent Classification & Routing
-        routing_decision = await self.agents['router'].classify_intent(
-            query, user_context, confidence_threshold=0.85
-        )
-        
-        # 2. Retrieve Relevant Context
-        similar_docs = await self.vector_store.similarity_search(
-            query, user_context['user_id'], k=5
-        )
-        
-        # 3. Agent Processing
-        if routing_decision.confidence > 0.85:
-            specialist_response = await self.agents[
-                routing_decision.agent_type
-            ].process_query(query, similar_docs, self.memory)
-        else:
-            # Multi-agent collaboration for ambiguous queries
-            specialist_response = await self.coordinate_agents(
-                query, similar_docs, routing_decision.candidates
-            )
-        
-        # 4. Confidence Evaluation & Human Handoff
-        final_response = await self.agents['supervisor'].evaluate_response(
-            specialist_response, confidence_threshold=0.80
-        )
-        
-        if final_response.requires_human_handoff:
-            return await self.escalate_to_human(query, final_response)
-            
-        # 5. Update Conversation Memory
-        await self.memory.save_context(
-            {"input": query}, {"output": final_response.content}
-        )
-        
-        return final_response`}</pre>
-            </div>
+      {/* Implementation Overview */}
+      <div className="bg-gradient-to-r from-indigo-50 to-blue-50 p-8 rounded-2xl border border-indigo-200">
+        <h3 className="text-2xl font-bold mb-6 text-indigo-900">Complete FastAPI Microservice</h3>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="bg-white p-6 rounded-xl shadow-md">
+            <h4 className="font-bold text-gray-900 mb-4 flex items-center">
+              <Code className="w-5 h-5 mr-2 text-indigo-600" />
+              Core Features Implemented
+            </h4>
+            <ul className="text-sm text-gray-700 space-y-2">
+              <li>• <strong>Encrypted Health Data:</strong> AES-256-GCM encryption for PHI</li>
+              <li>• <strong>JWT Authentication:</strong> RS256 with role-based access control</li>
+              <li>• <strong>Vector Search:</strong> ChromaDB integration for semantic similarity</li>
+              <li>• <strong>AI Integration:</strong> GPT-4 powered coaching generation</li>
+              <li>• <strong>Audit Logging:</strong> Comprehensive compliance tracking</li>
+              <li>• <strong>Rate Limiting:</strong> Protection against abuse</li>
+              <li>• <strong>Security Headers:</strong> OWASP recommended protections</li>
+              <li>• <strong>Health Checks:</strong> Monitoring and observability</li>
+            </ul>
+          </div>
+          <div className="bg-white p-6 rounded-xl shadow-md">
+            <h4 className="font-bold text-gray-900 mb-4 flex items-center">
+              <CheckCircle className="w-5 h-5 mr-2 text-green-600" />
+              Production Ready Features
+            </h4>
+            <ul className="text-sm text-gray-700 space-y-2">
+              <li>• <strong>Docker Containerization:</strong> Multi-stage builds</li>
+              <li>• <strong>Kubernetes Deployment:</strong> Scalable orchestration</li>
+              <li>• <strong>Comprehensive Testing:</strong> Unit and integration tests</li>
+              <li>• <strong>Security Scanning:</strong> Vulnerability assessments</li>
+              <li>• <strong>Monitoring:</strong> Prometheus metrics integration</li>
+              <li>• <strong>Error Handling:</strong> Graceful failure management</li>
+              <li>• <strong>Documentation:</strong> OpenAPI/Swagger specs</li>
+              <li>• <strong>HIPAA Compliance:</strong> Healthcare data protection</li>
+            </ul>
           </div>
         </div>
       </div>
 
-      {/* State Management */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white p-6 rounded-lg border">
-          <h4 className="font-semibold text-gray-900 mb-3">Conversation State Management</h4>
-          <div className="font-mono text-sm bg-gray-100 p-4 rounded">
-            <pre>{`class ConversationState:
-    def __init__(self):
-        self.user_profile = UserProfile()
-        self.session_context = {}
-        self.agent_history = []
-        self.confidence_scores = []
-        
-    async def update_state(self, interaction):
-        # Update user profile
-        await self.user_profile.update_preferences(
-            interaction.preferences
-        )
-        
-        # Track agent performance
-        self.confidence_scores.append({
-            'agent': interaction.agent_type,
-            'confidence': interaction.confidence,
-            'feedback': interaction.user_feedback
-        })
-        
-        # Maintain session context
-        self.session_context.update({
-            'last_topic': interaction.topic,
-            'user_mood': interaction.sentiment,
-            'goals_mentioned': interaction.goals
-        })`}</pre>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-lg border">
-          <h4 className="font-semibold text-gray-900 mb-3">Vector Search Integration</h4>
-          <div className="font-mono text-sm bg-gray-100 p-4 rounded">
-            <pre>{`class PersonalizedRetrieval:
-    async def similarity_search(self, query, user_id):
-        # Generate query embedding
-        query_embedding = await self.embed_query(query)
-        
-        # User-specific filtering
-        filter_conditions = {
-            'user_id': user_id,
-            'preferences': user.health_conditions,
-            'goals': user.fitness_goals
-        }
-        
-        # Hybrid search (semantic + keyword)
-        results = await self.vector_db.search(
-            vector=query_embedding,
-            filter=filter_conditions,
-            hybrid_search=True,
-            alpha=0.7  # Semantic vs keyword weight
-        )
-        
-        # Re-rank based on user engagement
-        reranked_results = await self.rerank_by_engagement(
-            results, user_id
-        )
-        
-        return reranked_results`}</pre>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Challenge3() {
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center space-x-3 mb-6">
-        <Users className="w-8 h-8 text-green-600" />
-        <h2 className="text-3xl font-bold text-gray-900">Startup Scaling Strategy</h2>
-      </div>
-
-      {/* Team Organization */}
-      <div className="bg-green-50 p-6 rounded-lg">
-        <h3 className="text-xl font-semibold mb-4">20-Week Production Launch Plan</h3>
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="space-y-4">
-            <div className="bg-white p-4 rounded-lg">
-              <h4 className="font-semibold text-green-900 mb-2">Sprint Structure (2-week sprints)</h4>
-              <div className="text-sm text-gray-700 space-y-2">
-                <div className="flex justify-between"><span>Sprints 1-2:</span> <span>Architecture & Security Foundation</span></div>
-                <div className="flex justify-between"><span>Sprints 3-4:</span> <span>Core AI Services Development</span></div>
-                <div className="flex justify-between"><span>Sprints 5-6:</span> <span>Frontend & API Integration</span></div>
-                <div className="flex justify-between"><span>Sprints 7-8:</span> <span>HIPAA Compliance & Security Audit</span></div>
-                <div className="flex justify-between"><span>Sprints 9-10:</span> <span>Production Deployment & Monitoring</span></div>
+      {/* API Endpoints */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="bg-white p-6 rounded-xl shadow-md border">
+          <h4 className="text-xl font-bold text-gray-900 mb-4">API Endpoints</h4>
+          <div className="space-y-3">
+            <div className="bg-green-50 p-3 rounded-lg border-l-4 border-green-500">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-sm font-semibold">POST /api/v1/auth/token</span>
+                <span className="bg-green-100 text-green-800 px-2 py-1 rounded text-xs">AUTH</span>
               </div>
+              <p className="text-xs text-gray-600 mt-1">Authenticate and receive JWT token</p>
             </div>
-            <div className="bg-white p-4 rounded-lg">
-              <h4 className="font-semibold text-green-900 mb-2">Risk Mitigation</h4>
-              <ul className="text-sm text-gray-700 space-y-1">
-                <li>• Multi-provider AI strategy (OpenAI + Azure OpenAI)</li>
-                <li>• Circuit breaker patterns for API failures</li>
-                <li>• Comprehensive integration testing</li>
-                <li>• Fallback to rule-based systems</li>
-              </ul>
+            <div className="bg-blue-50 p-3 rounded-lg border-l-4 border-blue-500">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-sm font-semibold">POST /api/v1/health-data/ingest</span>
+                <span className="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs">SECURE</span>
+              </div>
+              <p className="text-xs text-gray-600 mt-1">Ingest encrypted health data to vector store</p>
+            </div>
+            <div className="bg-purple-50 p-3 rounded-lg border-l-4 border-purple-500">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-sm font-semibold">POST /api/v1/coaching/generate</span>
+                <span className="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs">AI</span>
+              </div>
+              <p className="text-xs text-gray-600 mt-1">Generate personalized coaching with GPT-4</p>
+            </div>
+            <div className="bg-yellow-50 p-3 rounded-lg border-l-4 border-yellow-500">
+              <div className="flex items-center justify-between">
+                <span className="font-mono text-sm font-semibold">GET /api/v1/audit/logs</span>
+                <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs">AUDIT</span>
+              </div>
+              <p className="text-xs text-gray-600 mt-1">Retrieve compliance audit logs</p>
             </div>
           </div>
+        </div>
+
+        <div className="bg-white p-6 rounded-xl shadow-md border">
+          <h4 className="text-xl font-bold text-gray-900 mb-4">Security Implementation</h4>
           <div className="space-y-4">
-            <div className="bg-white p-4 rounded-lg">
-              <h4 className="font-semibold text-green-900 mb-2">Quality Gates</h4>
+            <div>
+              <h5 className="font-semibold text-gray-800 mb-2">Encryption & Authentication</h5>
               <ul className="text-sm text-gray-700 space-y-1">
-                <li>• 80% code coverage requirement</li>
-                <li>• Security scan on every PR</li>
-                <li>• Performance benchmarks (< 200ms API response)</li>
-                <li>• HIPAA compliance checklist validation</li>
+                <li>• AES-256-GCM for PHI data encryption</li>
+                <li>• RS256 JWT with 15-minute expiry</li>
+                <li>• Token blacklisting for secure logout</li>
+                <li>• Role-based access control (RBAC)</li>
               </ul>
             </div>
-            <div className="bg-white p-4 rounded-lg">
-              <h4 className="font-semibold text-green-900 mb-2">Monitoring & Incident Response</h4>
+            <div>
+              <h5 className="font-semibold text-gray-800 mb-2">API Security</h5>
               <ul className="text-sm text-gray-700 space-y-1">
-                <li>• Real-time alerting with PagerDuty</li>
-                <li>• SLA targets: 99.9% uptime</li>
-                <li>• Automated rollback procedures</li>
-                <li>• Post-incident review process</li>
+                <li>• Rate limiting (10-20 requests/minute)</li>
+                <li>• CORS with strict origin validation</li>
+                <li>• Security headers (CSP, HSTS, etc.)</li>
+                <li>• Request/response validation</li>
               </ul>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Team Allocation */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-lg border-l-4 border-blue-500">
-          <h4 className="font-semibold text-blue-900">Backend (3)</h4>
-          <p className="text-sm text-gray-600 mt-2">
-            • Microservices architecture<br/>
-            • Security & compliance<br/>
-            • Database optimization
-          </p>
-        </div>
-        <div className="bg-white p-4 rounded-lg border-l-4 border-green-500">
-          <h4 className="font-semibold text-green-900">Frontend (2)</h4>
-          <p className="text-sm text-gray-600 mt-2">
-            • React dashboard<br/>
-            • Mobile responsiveness<br/>
-            • Accessibility compliance
-          </p>
-        </div>
-        <div className="bg-white p-4 rounded-lg border-l-4 border-purple-500">
-          <h4 className="font-semibold text-purple-900">ML Engineers (2)</h4>
-          <p className="text-sm text-gray-600 mt-2">
-            • Agent orchestration<br/>
-            • Model fine-tuning<br/>
-            • Vector database optimization
-          </p>
-        </div>
-        <div className="bg-white p-4 rounded-lg border-l-4 border-red-500">
-          <h4 className="font-semibold text-red-900">DevOps (1)</h4>
-          <p className="text-sm text-gray-600 mt-2">
-            • Kubernetes deployment<br/>
-            • CI/CD pipelines<br/>
-            • Security monitoring
-          </p>
+      {/* Code Implementation Preview */}
+      <div className="bg-gray-50 p-6 rounded-xl">
+        <h4 className="text-xl font-bold text-gray-900 mb-4">Implementation Highlights</h4>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="bg-white p-4 rounded-lg">
+            <h5 className="font-semibold text-gray-800 mb-2">Encrypted Data Handling</h5>
+            <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-xs overflow-x-auto">
+              <pre>{`@app.post("/api/v1/health-data/ingest")
+@limiter.limit("10/minute")
+async def ingest_health_data(
+    data: EncryptedHealthData,
+    current_user: Dict = Depends(require_role(["healthcare_provider"]))
+):
+    # Decrypt PHI data
+    decrypted_data = decrypt_data(data.encrypted_data)
+    health_info = json.loads(decrypted_data)
+    
+    # Generate embeddings
+    text_content = f"{health_info.get('symptoms', '')} {health_info.get('concerns', '')}"
+    embeddings = sentence_model.encode([text_content])[0].tolist()
+    
+    # Store with encrypted metadata
+    encrypted_metadata = encrypt_data(json.dumps({
+        "patient_id": data.patient_id,
+        "data_type": data.data_type,
+        "provider_id": current_user["user_id"]
+    }))
+    
+    health_collection.add(
+        embeddings=[embeddings],
+        documents=[text_content],
+        metadatas=[{"encrypted_metadata": encrypted_metadata}],
+        ids=[f"{data.patient_id}_{int(time.time())}"]
+    )`}</pre>
+            </div>
+          </div>
+          <div className="bg-white p-4 rounded-lg">
+            <h5 className="font-semibold text-gray-800 mb-2">AI Coaching Generation</h5>
+            <div className="bg-gray-900 text-green-400 p-3 rounded font-mono text-xs overflow-x-auto">
+              <pre>{`@app.post("/api/v1/coaching/generate")
+@limiter.limit("20/minute")
+async def generate_coaching(
+    coaching_request: CoachingRequest,
+    current_user: Dict = Depends(require_role(["ai_user"]))
+):
+    # Semantic search for context
+    query_embedding = sentence_model.encode([coaching_request.query])[0].tolist()
+    search_results = health_collection.query(
+        query_embeddings=[query_embedding],
+        n_results=5
+    )
+    
+    # Generate coaching with GPT-4
+    response = await client.post(
+        "https://api.openai.com/v1/chat/completions",
+        json={
+            "model": "gpt-4",
+            "messages": [
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ]
+        }
+    )
+    
+    # Structure response with confidence scoring
+    return CoachingResponse(
+        recommendations=parsed_recommendations,
+        confidence_score=calculated_confidence,
+        coaching_type="personalized_wellness",
+        audit_id=audit_id
+    )`}</pre>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  );
-}
 
-function Challenge4() {
-  return (
-    <div className="space-y-6">
-      <div className="flex items-center space-x-3 mb-6">
-        <Server className="w-8 h-8 text-indigo-600" />
-        <h2 className="text-3xl font-bold text-gray-900">FastAPI Implementation</h2>
-      </div>
-
-      <div className="bg-indigo-50 p-6 rounded-lg">
-        <h3 className="text-xl font-semibold mb-4">Production-Ready Healthcare AI Microservice</h3>
-        <p className="text-gray-700 mb-4">
-          The complete implementation includes encrypted data handling, vector search, AI coaching generation, 
-          and comprehensive audit logging. This service demonstrates enterprise-grade security and scalability patterns.
-        </p>
-        
-        <div className="bg-white p-4 rounded-lg border">
-          <h4 className="font-semibold text-gray-900 mb-2">Key Features Implemented:</h4>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {/* Deployment & Testing */}
+      <div className="bg-indigo-50 p-6 rounded-xl border border-indigo-200">
+        <h4 className="text-xl font-bold text-indigo-900 mb-4">Deployment & Testing Strategy</h4>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-white p-4 rounded-lg">
+            <h5 className="font-semibold text-gray-800 mb-2 flex items-center">
+              <Server className="w-4 h-4 mr-2 text-blue-600" />
+              Docker Deployment
+            </h5>
             <ul className="text-sm text-gray-700 space-y-1">
-              <li>• AES-256-GCM encryption for PHI data</li>
-              <li>• JWT authentication with role-based access</li>
-              <li>• Vector similarity search with Chroma DB</li>
-              <li>• GPT-4 integration for personalized coaching</li>
+              <li>• Multi-stage Docker builds</li>
+              <li>• Non-root user security</li>
+              <li>• Health check endpoints</li>
+              <li>• Docker Compose orchestration</li>
             </ul>
+          </div>
+          <div className="bg-white p-4 rounded-lg">
+            <h5 className="font-semibold text-gray-800 mb-2 flex items-center">
+              <Activity className="w-4 h-4 mr-2 text-green-600" />
+              Kubernetes Ready
+            </h5>
             <ul className="text-sm text-gray-700 space-y-1">
-              <li>• Comprehensive audit logging</li>
-              <li>• Request/response validation with Pydantic</li>
-              <li>• Rate limiting and security headers</li>
-              <li>• Health checks and metrics endpoints</li>
+              <li>• Horizontal pod autoscaling</li>
+              <li>• Rolling update deployments</li>
+              <li>• ConfigMaps and Secrets</li>
+              <li>• Ingress with TLS termination</li>
+            </ul>
+          </div>
+          <div className="bg-white p-4 rounded-lg">
+            <h5 className="font-semibold text-gray-800 mb-2 flex items-center">
+              <CheckCircle className="w-4 h-4 mr-2 text-purple-600" />
+              Testing Suite
+            </h5>
+            <ul className="text-sm text-gray-700 space-y-1">
+              <li>• Unit tests with pytest</li>
+              <li>• Integration test coverage</li>
+              <li>• Security vulnerability scans</li>
+              <li>• Performance benchmarking</li>
             </ul>
           </div>
         </div>
       </div>
 
-      <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
-        <div className="flex items-start">
-          <div className="flex-shrink-0">
-            <Activity className="w-5 h-5 text-yellow-600 mt-0.5" />
+      {/* Live Implementation */}
+      <div className="bg-gradient-to-r from-green-50 to-emerald-50 p-6 rounded-xl border border-green-200">
+        <div className="flex items-start space-x-4">
+          <div className="bg-green-100 p-3 rounded-xl">
+            <Zap className="w-6 h-6 text-green-600" />
           </div>
-          <div className="ml-3">
-            <h4 className="text-yellow-800 font-semibold">Live Implementation</h4>
-            <p className="text-yellow-700 text-sm mt-1">
-              Click "Start Implementation" below to deploy the complete FastAPI microservice with all security features, 
-              database integration, and monitoring capabilities.
+          <div className="flex-1">
+            <h4 className="text-xl font-bold text-green-900 mb-2">Complete Implementation Available</h4>
+            <p className="text-green-800 mb-4">
+              The full FastAPI microservice is implemented with all security features, database integration, 
+              AI coaching capabilities, and production deployment configurations. The codebase includes:
             </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <ul className="text-sm text-green-700 space-y-1">
+                <li>• Complete FastAPI application (healthcare_microservice/main.py)</li>
+                <li>• Docker containerization with security best practices</li>
+                <li>• Kubernetes deployment manifests</li>
+                <li>• Comprehensive test suite</li>
+              </ul>
+              <ul className="text-sm text-green-700 space-y-1">
+                <li>• Production requirements.txt</li>
+                <li>• Security configurations</li>
+                <li>• Monitoring and health checks</li>
+                <li>• HIPAA compliance features</li>
+              </ul>
+            </div>
           </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-export default App;
