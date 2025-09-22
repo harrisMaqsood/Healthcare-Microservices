@@ -1,0 +1,129 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: healthcare-ai-service
+  namespace: healthcare
+  labels:
+    app: healthcare-ai
+    version: v1.0.0
+spec:
+  replicas: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  selector:
+    matchLabels:
+      app: healthcare-ai
+  template:
+    metadata:
+      labels:
+        app: healthcare-ai
+        version: v1.0.0
+    spec:
+      serviceAccountName: healthcare-ai-service-account
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: healthcare-ai
+        image: healthcare-ai:v1.0.0
+        ports:
+        - containerPort: 8000
+          name: http
+        env:
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: healthcare-secrets
+              key: jwt-secret
+        - name: ENCRYPTION_KEY
+          valueFrom:
+            secretKeyRef:
+              name: healthcare-secrets
+              key: encryption-key
+        - name: OPENAI_API_KEY
+          valueFrom:
+            secretKeyRef:
+              name: healthcare-secrets
+              key: openai-api-key
+        - name: REDIS_HOST
+          value: "redis-service"
+        - name: REDIS_PORT
+          value: "6379"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        volumeMounts:
+        - name: logs
+          mountPath: /var/log/healthcare_ai
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: logs
+        persistentVolumeClaim:
+          claimName: healthcare-logs-pvc
+      - name: data
+        persistentVolumeClaim:
+          claimName: healthcare-data-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: healthcare-ai-service
+  namespace: healthcare
+spec:
+  selector:
+    app: healthcare-ai
+  ports:
+  - port: 8000
+    targetPort: 8000
+    name: http
+  type: ClusterIP
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: healthcare-ai-ingress
+  namespace: healthcare
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  tls:
+  - hosts:
+    - api.healthcare-ai.com
+    secretName: healthcare-ai-tls
+  rules:
+  - host: api.healthcare-ai.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: healthcare-ai-service
+            port:
+              number: 8000

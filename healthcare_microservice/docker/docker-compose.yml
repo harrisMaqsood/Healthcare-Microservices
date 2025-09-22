@@ -1,0 +1,56 @@
+version: '3.8'
+
+services:
+  healthcare-ai:
+    build: 
+      context: ..
+      dockerfile: docker/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - JWT_SECRET=${JWT_SECRET}
+      - ENCRYPTION_KEY=${ENCRYPTION_KEY}
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_SSL=false
+    depends_on:
+      - redis
+    volumes:
+      - ./logs:/var/log/healthcare_ai
+      - ./data:/data
+    networks:
+      - healthcare-network
+    restart: unless-stopped
+    
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    command: redis-server --appendonly yes --requirepass ${REDIS_PASSWORD}
+    volumes:
+      - redis_data:/data
+    networks:
+      - healthcare-network
+    restart: unless-stopped
+    
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
+      - ./nginx/ssl:/etc/nginx/ssl
+    depends_on:
+      - healthcare-ai
+    networks:
+      - healthcare-network
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+
+networks:
+  healthcare-network:
+    driver: bridge
