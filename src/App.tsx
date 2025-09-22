@@ -411,3 +411,5 @@ async def generate_coaching(
               </ul>
             </div>
           </div>
+
+export default App
